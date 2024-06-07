@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee List</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+<div>
+    <h1>Employee List</h1>
+    <div>
+        <a th:href="@{/addEmployee}">Add Employee</a> | <a th:href="@{/}">Back to Home</a>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Skills</th>
+            <th>Projects</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee : ${employees}">
+            <td th:text="${employee.id}"></td>
+            <td th:text="${employee.name}"></td>
+            <td th:text="${employee.email}"></td>
+            <td>
+                <ul>
+                    <li th:each="skill : ${employee.skills}" th:text="${skill}"></li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li th:each="project : ${employee.projects}" th:text="${project.name + ' (' + project.percentage + '%)'}"></li>
+                </ul>
+            </td>
+            <td>
+                <form th:action="@{/removeEmployee/{id}(id=${employee.id})}" method="post">
+                    <input type="submit" value="Remove" />
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
